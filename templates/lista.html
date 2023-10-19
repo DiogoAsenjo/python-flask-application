@@ -18,11 +18,18 @@
         </table>
 <!--        <button type="submit" class="btn btn-primary btn-salvar">Logout</button>-->
 <!--<a href="{{ url_for('logout') }}" class="btn btn-primary btn-salvar">Logout</a>-->
-            <form method="GET" action="{{ url_for('logout') }}">
-                <button type="submit" class="btn btn-primary btn-salvar">Logout</button>
+            <form method="GET" action="{{ url_for('novoFornecedor') }}">
+                <div class="form-group">
+                    <label for="nome">Documento fornecedor</label>
+                    <input type="text" id="nome" name="nome" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary btn-salvar">Pesquisar fornecedor</button>
             </form>
             <form method="GET" action="{{ url_for('novoFornecedor') }}">
                 <button type="submit" class="btn btn-primary btn-salvar">Adicionar fornecedor</button>
+            </form>
+            <form method="GET" action="{{ url_for('logout') }}">
+                <button type="submit" class="btn btn-primary btn-salvar">Logout</button>
             </form>
 
 {% endblock %}

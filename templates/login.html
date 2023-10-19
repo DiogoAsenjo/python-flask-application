@@ -24,6 +24,10 @@
             <p><label>Senha:</label> <input class="form-control" type="password" name="senha" required></p>
             <p><button class="btn btn-primary" type="submit">Entrar</button></p>
         </form>
+        <form method="GET" action="{{ url_for('index') }}">
+            <button type="submit" class="btn btn-primary btn-salvar">Ver fornecedores</button>
+        </form>
     </div>
+
 </body>
 </html>
