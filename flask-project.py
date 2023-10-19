@@ -28,6 +28,24 @@ def index():
 
 @app.route('/fornecedores')
 def getFornecedores():
+    queryString = request.args.get('query')
+    fornecedorEncontrado = []
+    for fornecedor in listaFornecedores:
+        if fornecedor.documento == queryString:
+            fornecedorEncontrado.append(fornecedor.to_dict())
+
+    if queryString and fornecedorEncontrado:
+        return jsonify({
+                "message": "Fornecedor encontrado",
+                "data": fornecedorEncontrado
+            })
+
+    if queryString and not fornecedorEncontrado:
+        return jsonify({
+            "message": "Nenhum fornecedor encontrado com esse documento",
+            "data": fornecedorEncontrado
+        })
+
     fornecedores = [fornecedor.to_dict() for fornecedor in listaFornecedores]
     if fornecedores:
         return jsonify({
