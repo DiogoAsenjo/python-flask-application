@@ -20,7 +20,8 @@ def index():
 @app.route('/novo')
 def novoFornecedor():
     if 'usuario_logado' not in session or session['usuario_logado'] == None:
-        return redirect(url_for('login', proxima=url_for('novo')))
+        #return redirect('/login?proxima=novo') #ANTES
+        return redirect(url_for('login', proxima='novo')) # DEPOIS
     return render_template('adicionaFornecedor.html', titulo='Cadastrar fornecedor: ')
 
 @app.route('/criar', methods=['POST',])
@@ -46,7 +47,9 @@ def autenticar():
         session['usuario_logado'] = request.form['usuario']
         flash(session['usuario_logado'] + ' logado com sucesso!')
         proximaPagina = request.form['proxima']
-        return redirect(proximaPagina)
+        if not proximaPagina:
+            return redirect(url_for('index'))
+        return redirect (proximaPagina)
     else:
         flash('Usuário ou senha incorreta')
         return redirect(url_for('login'))
