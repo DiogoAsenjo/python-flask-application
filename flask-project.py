@@ -30,6 +30,7 @@ def index():
 def getFornecedores():
     queryString = request.args.get('query')
     fornecedorEncontrado = []
+
     for fornecedor in listaFornecedores:
         if fornecedor.documento == queryString:
             fornecedorEncontrado.append(fornecedor.to_dict())
@@ -65,14 +66,19 @@ def novoFornecedor():
         return redirect(url_for('login', proxima='novo')) # DEPOIS
     return render_template('adicionaFornecedor.html', titulo='Cadastrar fornecedor: ')
 
-@app.route('/criar', methods=['POST',])
+@app.route('/criar', methods=['GET', 'POST', ])
 def criarFornecedor():
     nome = request.form['nome']
     documento = request.form['documento']
+
+    if not nome or not documento:
+        flash('Os campos nome e documento são obrigatórios!')
+        print("Valor de nome e documento" + nome, documento)
+        return redirect(url_for('novoFornecedor'))
+
     fornecedor = Fornecedor(nome, documento)
     listaFornecedores.append(fornecedor)
-    session['novo_fornecedor'] = request.form['nome']
-    flash(session['novo_fornecedor'] + ' adicionado com sucesso!')
+    flash(nome + ' adicionado com sucesso!')
     return redirect(url_for('index'))
 
 @app.route('/login')
@@ -99,6 +105,6 @@ def autenticar():
 def logout():
     session['usuario_logado'] = None
     flash('Usuário deslogado!')
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 app.run(debug=True)
